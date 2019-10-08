@@ -1,1 +1,3 @@
-*.luc
+#vai ignorar o output gerado pelo programa
+*output.luc
+!exemplo.luc
