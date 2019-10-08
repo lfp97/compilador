@@ -19,6 +19,7 @@ namespace Scanner
             id = 7, //Qualquer caractere que inicia com letra
             pontoVirgula = 9, // ;
             mInt = 10, // int
+            mFloat = 12, // float
             mElse = 11, // else
             valor = 17, // numericos
             atribuicao = 18, // =
@@ -188,6 +189,8 @@ namespace Scanner
                     return lexema.mIf;
                 case "int":
                     return lexema.mInt;
+                case "float":
+                    return lexema.mFloat;
                 case "else":
                     return lexema.mElse;
                 default:
