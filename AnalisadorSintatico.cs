@@ -80,10 +80,10 @@ namespace Scanner
                             i++;
                             switch (Enum.Parse(typeof(Program.lexema), getLexemaName(i)))
                             {
-                                case Program.lexema.mOpAlgebrico:
+                                case Program.lexema.opAlgebrico:
                                     i++;
                                     return checkSyntax(Fluxo.ExpAlg);
-                                case Program.lexema.mAtribuicao:
+                                case Program.lexema.atribuicao:
                                     i++;
                                     return checkSyntax(Fluxo.Atribuicao);
                                 default:
@@ -107,7 +107,7 @@ namespace Scanner
                         {
                             return true;
                         }
-                        else if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.mAtribuicao)
+                        else if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.atribuicao)
                         {
                             i++;
                             if (checkSyntax(Fluxo.ExpAlg))
@@ -162,7 +162,7 @@ namespace Scanner
                     if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.id || (Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.valor)
                     {
                         i++;
-                        if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.mOpAlgebrico)
+                        if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.opAlgebrico)
                         {
                             i++;
                             return checkSyntax(Fluxo.ExpAlg);

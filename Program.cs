@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Program
+namespace Scanner
 {
     public class Program
     {
@@ -21,8 +21,8 @@ namespace Program
             mInt = 10, // int
             mElse = 11, // else
             valor = 17, // numericos
-            mAtribuicao = 18, // =
-            mOpAlgebrico = 19, // + - * /
+            atribuicao = 18, // =
+            opAlgebrico = 19, // + - * /
             mString = 20, // "((a-z)*(0-9)*)*"
         }
 
@@ -51,7 +51,7 @@ namespace Program
                                 {
                                     lexema lexemas = lexema.indef;
                                     lexema aux = lexema.chaveDir;
-                                    Console.WriteLine(aux);
+                                    //Console.WriteLine(aux);
                                     lexemas = CheckChar(sr, ref token);
 
                                     fw.WriteLine($"{lexemas.ToString()},{token}\n");
@@ -123,11 +123,11 @@ namespace Program
             }
             else if (ch == '=')
             {
-                lexemas = lexema.mAtribuicao;
+                lexemas = lexema.atribuicao;
             }
             else if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
             {
-                lexemas = lexema.mOpAlgebrico;
+                lexemas = lexema.opAlgebrico;
             }
             else if (ch == '"')
             {
