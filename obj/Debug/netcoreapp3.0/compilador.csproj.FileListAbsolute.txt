@@ -1,0 +1,11 @@
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\bin\Debug\netcoreapp3.0\compilador.exe
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\bin\Debug\netcoreapp3.0\compilador.deps.json
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\bin\Debug\netcoreapp3.0\compilador.runtimeconfig.json
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\bin\Debug\netcoreapp3.0\compilador.runtimeconfig.dev.json
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\bin\Debug\netcoreapp3.0\compilador.dll
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\bin\Debug\netcoreapp3.0\compilador.pdb
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\obj\Debug\netcoreapp3.0\compilador.csprojAssemblyReference.cache
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\obj\Debug\netcoreapp3.0\compilador.AssemblyInfoInputs.cache
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\obj\Debug\netcoreapp3.0\compilador.AssemblyInfo.cs
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\obj\Debug\netcoreapp3.0\compilador.dll
+C:\Users\lucas\Downloads\Trabalhos_faculdade\compiladores\compilador\obj\Debug\netcoreapp3.0\compilador.pdb
