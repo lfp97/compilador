@@ -5,6 +5,7 @@ int y = 345.6;
 int result = x v (a ^ y);
 for (int a)
 {
-    ddd =! a;
+    if (ddd =! a)
+        a = !b;
     int ab = !y;
 }

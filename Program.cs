@@ -13,7 +13,7 @@ namespace Scanner
             mIf = 0, //if
             parenEsq = 1, //(
             parenDir = 2, //) 
-            opRel = 3, // ==|>=|<=|=!| < | >
+            opRel = 3, // ==|>=|<=|=!| < | >      -- Atenção para o novo símbolo de negação =!
             opLog = 4, // ou == v | e == ^
             chaveEsq = 5, //{
             chaveDir = 6, //}
@@ -117,6 +117,10 @@ namespace Scanner
             else if (ch == '^')
             {
                 lexemas = lexema.opLog;
+            }
+            else if (ch == '!')
+            {
+                lexemas = lexema.negacao;
             }
             else if (ch == '{')
             {
