@@ -10,24 +10,24 @@ namespace Scanner
         public enum lexema
         {
             indef = -1,
-            mIf = 0, //if
-            parenEsq = 1, //(
-            parenDir = 2, //) 
-            opRel = 3, // ==|>=|<=|=!| < | >      -- Atenção para o novo símbolo de negação =!
-            opLog = 4, // ou == v | e == ^
-            chaveEsq = 5, //{
-            chaveDir = 6, //}
-            id = 7, //Qualquer caractere que inicia com letra
-            mWhile = 8, // while
-            pontoVirgula = 9, // ;
-            mInt = 10, // int
-            mElse = 11, // else
-            mFloat = 12, // float
-            negacao = 13, // !
-            mFor = 16, // for
-            valor = 17, // numericos
-            atribuicao = 18, // =
-            opAlgebrico = 19, // + - * /
+            mIf = 0, //if           Expressão Regular em C#: @"\b(if)\b"
+            parenEsq = 1, //(       Expressão Regular em C#: @"\b(\()\b"           \( vai procurar o char '(' na expressao, alguns carcteres precisam do '\' antes
+            parenDir = 2, //)       Expressão Regular em C#: @"\b(\))\b"
+            opRel = 3, // ==|>=|<=|=!| < | >      Expressão Regular em C#: @"\b(==|>=|<=|=!|\<|\>)\b"
+            opLog = 4, // ou == v | e == ^        Expressão Regular em C#: @"\b(v|\^)\b"
+            chaveEsq = 5, //{       Expressão Regular em C#: @"\b(\{\b"
+            chaveDir = 6, //}       Expressão Regular em C#: @"\b(\}\b"
+            id = 7, //Qualquer caractere que inicia com letra       Expressão Regular em C#: @"\b((a-z))\b"
+            mWhile = 8, // while    Expressão Regular em C#: @"\b(while)\b"
+            pontoVirgula = 9, // ;  Expressão Regular em C#: @"\b(;)\b"
+            mInt = 10, // int       Expressão Regular em C#: @"\b(int)\b"
+            mElse = 11, // else     Expressão Regular em C#: @"\b(else)\b"
+            mFloat = 12, // float   Expressão Regular em C#: @"\b(float)\b"
+            negacao = 13, // !      Expressão Regular em C#: @"\b(while)\b"
+            mFor = 16, // for       Expressão Regular em C#: @"\b(for)\b"
+            valor = 17, // numericos    Expressão Regular em C#: @"\b(0-9)\b"
+            atribuicao = 18, // =       Expressão Regular em C#: @"\b(=)\b"
+            opAlgebrico = 19, // + - * /    Expressão Regular em C#: @"\b(+|-|*|\/)\b"
             mString = 20, // "((a-z)*(0-9)*)*"
         }
 
