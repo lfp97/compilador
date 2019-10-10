@@ -1,3 +1,10 @@
 int x;
-x=13;
-float a = "asd";
+x=12.1;
+float a = 0.0;
+int y = 345.6;
+int result = x v (a ^ y);
+for (int a)
+{
+    ddd =! a;
+    int ab = !y;
+}

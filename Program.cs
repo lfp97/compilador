@@ -14,13 +14,17 @@ namespace Scanner
             parenEsq = 1, //(
             parenDir = 2, //) 
             opRel = 3, // ==|>=|<=|=!| < | >
+            opLog = 4, // ou == v | e == ^
             chaveEsq = 5, //{
             chaveDir = 6, //}
             id = 7, //Qualquer caractere que inicia com letra
+            mWhile = 8, // while
             pontoVirgula = 9, // ;
             mInt = 10, // int
-            mFloat = 12, // float
             mElse = 11, // else
+            mFloat = 12, // float
+            negacao = 13, // !
+            mFor = 16, // for
             valor = 17, // numericos
             atribuicao = 18, // =
             opAlgebrico = 19, // + - * /
@@ -51,8 +55,6 @@ namespace Scanner
                                 while (!sr.EndOfStream)
                                 {
                                     lexema lexemas = lexema.indef;
-                                    lexema aux = lexema.chaveDir;
-                                    //Console.WriteLine(aux);
                                     lexemas = CheckChar(sr, ref token);
 
                                     fw.WriteLine($"{lexemas.ToString()},{token}\n");
@@ -108,6 +110,14 @@ namespace Scanner
             {
                 lexemas = lexema.parenDir;
             }
+            else if (ch == 'v')
+            {
+                lexemas = lexema.opLog;
+            }
+            else if (ch == '^')
+            {
+                lexemas = lexema.opLog;
+            }
             else if (ch == '{')
             {
                 lexemas = lexema.chaveEsq;
@@ -160,7 +170,11 @@ namespace Scanner
                     {
                         lexemas = lexema.indef;
                     }
-                    else if (!char.IsNumber((char)sr.Peek()))
+                    else if (char.IsNumber((char)sr.Peek()) || (char)sr.Peek() == '.' ) //checa se o próx. char é um nº ou '.'
+                    {
+                        // evita executar o break abaixo, meu deus como isso demorou pra sair
+                    }
+                    else if (!char.IsNumber((char)sr.Peek())) // se não for, o break tira do loop
                     {
                         break;
                     }
@@ -185,6 +199,8 @@ namespace Scanner
         {
             switch (token)
             {
+                case "while":
+                    return lexema.mWhile;
                 case "if":
                     return lexema.mIf;
                 case "int":
@@ -193,6 +209,8 @@ namespace Scanner
                     return lexema.mFloat;
                 case "else":
                     return lexema.mElse;
+                case "for":
+                    return lexema.mFor;
                 default:
                     return lexema.id;
             }
