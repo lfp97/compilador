@@ -29,11 +29,8 @@ namespace Scanner
         {
             try
             {   // Open the text file using a stream reader.
-                //using (StreamReader sr = new StreamReader("output.luc"))
-                //using (StreamReader sr = new StreamReader("C:\\Users\\lucas\\Downloads\\Trabalhos_faculdade\\compiladores\\Scanner\\Scanner\\bin\\Debug\\netcoreapp3.0\\output.luc"))
                 using (StreamReader sr = new StreamReader(outputPath))
                 {
-                    //Console.WriteLine(outputPath);
                     // Read the stream to a string, and write the string to the console.
                     String line = sr.ReadToEnd();
                     //Console.WriteLine(line);
@@ -94,6 +91,9 @@ namespace Scanner
                                     return checkSyntax(Fluxo.ExpBool);
                             }
                         case Program.lexema.mInt:
+                            i++;
+                            return checkSyntax(Fluxo.Declaracao);
+                        case Program.lexema.mFloat:
                             i++;
                             return checkSyntax(Fluxo.Declaracao);
                         case Program.lexema.mString:

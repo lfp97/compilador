@@ -58,7 +58,6 @@ namespace Scanner
                                     lexemas = CheckChar(sr, ref token); //aqui chama a função que realiza a comparação da leitura com os lexemas
 
                                     fw.WriteLine($"{lexemas.ToString()},{token}\n"); //como será escrito no arquivo de saída "LEXEMA,TOKEN"
-                                    //fw.WriteLine($"{token},{lexemas.ToString()}\n"); //como será escrito no arquivo de saída "LEXEMA,TOKEN"
                                 }
 
                                 Console.WriteLine("Output criado.");
