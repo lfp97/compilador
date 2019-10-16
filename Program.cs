@@ -37,7 +37,7 @@ namespace Scanner
 
             if (args.Length <= 0)
             {
-                Console.WriteLine("Os Argumentos são Scanner [Arquivo] \n ex: Scanner file");
+                Console.WriteLine("Os Argumentos são Scanner [Arquivo] \n ex: Scanner file"); //caso nao especifique o arquivo a ser lido
             }
             else
             {
@@ -46,7 +46,7 @@ namespace Scanner
                 string token = string.Empty;
                 try
                 {
-                    using (StreamReader sr = new StreamReader(filePath))
+                    using (StreamReader sr = new StreamReader(filePath)) //sr vai ler o arquivo no caminho definido acima que é onde está o arquivo de entrada
                     {
                         if (new FileInfo(filePath).Length != 0)
                         {
@@ -55,9 +55,9 @@ namespace Scanner
                                 while (!sr.EndOfStream)
                                 {
                                     lexema lexemas = lexema.indef;
-                                    lexemas = CheckChar(sr, ref token);
+                                    lexemas = CheckChar(sr, ref token); //aqui chama a função que realiza a comparação da leitura com os lexemas
 
-                                    fw.WriteLine($"{lexemas.ToString()},{token}\n");
+                                    fw.WriteLine($"{lexemas.ToString()},{token}\n"); //como será escrito no arquivo de saída "LEXEMA,TOKEN"
                                 }
 
                                 Console.WriteLine("Output criado.");
@@ -88,7 +88,7 @@ namespace Scanner
             charLixos.Add('\f');
             charLixos.Add('\t');
 
-            char ch = (char)sr.Read();
+            char ch = (char)sr.Read(); //o caractere da vez
             lexemas = lexema.indef;
 
             //Evita characteres indesejados como fim de linha e etc
@@ -129,7 +129,7 @@ namespace Scanner
             else if (ch == '}')
             {
                 lexemas = lexema.chaveDir;
-            }
+            } //abaixo ele "espia" com o método Peek() qual o próximo caractere a ser lido sem consumí-lo. Ex: ==, como o char dessa iteração é o '=', ele espia se o próximo é '=' ou '>' etc
             else if ((ch == '=' && ((char)sr.Peek() == '!' || (char)sr.Peek() == '=')) || ((ch == '>' || ch == '<') && (char)sr.Peek() == '=') || (ch == '!' && (char)sr.Peek() == '=') || ch == '>' || ch == '<')
             {
                 ch = (char)sr.Read();
@@ -162,21 +162,21 @@ namespace Scanner
                     token += ch.ToString();
                 }
 
-                lexemas = FindLex(token);
+                lexemas = FindLex(token); //se reconhece que é uma letra ele vai analisar a palavra digitada nesta função
             }
-            else if (char.IsDigit(ch))
+            else if (char.IsDigit(ch)) //se for um númeor
             {
                 lexemas = lexema.valor;
 
-                while (!char.IsWhiteSpace((char)sr.Peek()))
+                while (!char.IsWhiteSpace((char)sr.Peek())) //enquanto não for um espaço em branco
                 {
-                    if (char.IsLetter((char)sr.Peek()))
+                    if (char.IsLetter((char)sr.Peek())) //"espia" o próx char, se for letra o lexema não é válido
                     {
                         lexemas = lexema.indef;
                     }
-                    else if (char.IsNumber((char)sr.Peek()) || (char)sr.Peek() == '.' ) //checa se o próx. char é um nº ou '.'
+                    else if (char.IsNumber((char)sr.Peek()) || (char)sr.Peek() == '.' ) //"espia" se o próx. char é um nº ou '.'
                     {
-                        // evita executar o break abaixo, meu deus como isso demorou pra sair
+                        // evita executar o break abaixo
                     }
                     else if (!char.IsNumber((char)sr.Peek())) // se não for, o break tira do loop
                     {
@@ -184,7 +184,7 @@ namespace Scanner
                     }
 
                     ch = (char)sr.Read();
-                    token += ch.ToString();
+                    token += ch.ToString(); //acumula o valor para retornar o nº completo no arquivo de saída ex: 12.3 ou 12541
                 }
             }
             else
