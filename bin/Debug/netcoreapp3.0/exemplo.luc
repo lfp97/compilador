@@ -1,11 +1,2 @@
 int x;
-x=12.1;
-float a = 0.0;
-int y = 345.6;
-int result = x v (a ^ y);
-for (int a)
-{
-    if (ddd =! a)
-        a = !b;
-    int ab = !y;
-}
+x=if;

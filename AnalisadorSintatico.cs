@@ -25,15 +25,18 @@ namespace Scanner
             Printf = 10
         }
 
-        public static bool AnalyzeOutput()
+        public static bool AnalyzeOutput(string outputPath)
         {
             try
             {   // Open the text file using a stream reader.
                 //using (StreamReader sr = new StreamReader("output.luc"))
-                using (StreamReader sr = new StreamReader("C:\\Users\\lucas\\Downloads\\Trabalhos_faculdade\\compiladores\\Scanner\\Scanner\\bin\\Debug\\netcoreapp3.0\\output.luc"))
+                //using (StreamReader sr = new StreamReader("C:\\Users\\lucas\\Downloads\\Trabalhos_faculdade\\compiladores\\Scanner\\Scanner\\bin\\Debug\\netcoreapp3.0\\output.luc"))
+                using (StreamReader sr = new StreamReader(outputPath))
                 {
+                    //Console.WriteLine(outputPath);
                     // Read the stream to a string, and write the string to the console.
                     String line = sr.ReadToEnd();
+                    //Console.WriteLine(line);
 
                     mLexemas = line.Split("\n\r\n");
                 }
@@ -58,12 +61,12 @@ namespace Scanner
 
         private static string getLexemaName(int mIndex)
         {
-            return mLexemas[mIndex].Split(',')[1];
+            return mLexemas[mIndex].Split(',')[0];   
         }
 
         private static string getLexemaValue(int mIndex)
         {
-            return mLexemas[mIndex].Split(',')[0];
+            return mLexemas[mIndex].Split(',')[1];
         }
 
         private static bool checkSyntax(Fluxo fluxo)
@@ -96,6 +99,12 @@ namespace Scanner
                         case Program.lexema.mString:
                             i++;
                             return checkSyntax(Fluxo.Declaracao);
+                        case Program.lexema.mFor:
+                            i++;
+                            return checkSyntax(Fluxo.For);
+                        case Program.lexema.mWhile:
+                            i++;
+                            return checkSyntax(Fluxo.While);
                         default:
                             return false;
                     }
@@ -222,6 +231,112 @@ namespace Scanner
                         }
                     }
                     break;
+                case Fluxo.Iteracao:
+                    if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.mFor)
+                    {
+                        return checkSyntax(Fluxo.For);
+                    }
+                    else if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.mWhile)
+                    {
+                        return checkSyntax(Fluxo.While);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case Fluxo.For:
+                    if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.parenEsq)
+                    {
+                        i++;
+                        if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.mInt || (Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.id)
+                        {
+                            if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.mInt)
+                            {
+                                i++;
+                                if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) != Program.lexema.id)
+                                {
+                                    return false;
+                                }
+                            }
+
+                            i++;
+                            if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.atribuicao)
+                            {
+                                i++;
+                                if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.id || (Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.valor)
+                                {
+                                    i++;
+                                    if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.pontoVirgula)
+                                    {
+                                        i++;
+                                        if (checkSyntax(Fluxo.ExpBool))
+                                        {
+                                            if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.pontoVirgula)
+                                            {
+                                                i++;
+                                                if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.id)
+                                                {
+                                                    i++;
+                                                    if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.atribuicao)
+                                                    {
+                                                        i++;
+                                                        if (checkSyntax(Fluxo.ExpAlg))
+                                                        {
+                                                            i++;
+                                                            if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.parenDir)
+                                                            {
+                                                                i++;
+                                                                if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.chaveEsq)
+                                                                {
+                                                                    i++;
+                                                                    checkSyntax(Fluxo.undef);
+
+                                                                    i++;
+                                                                    if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.chaveDir)
+                                                                    {
+                                                                        return true;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    break;
+                case Fluxo.While:
+                    if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.parenEsq)
+                    {
+                        i++;
+                        if (checkSyntax(Fluxo.ExpBool))
+                        {
+                            if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.parenDir)
+                            {
+                                i++;
+                                if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.chaveEsq)
+                                {
+                                    i++;
+                                    if (checkSyntax(Fluxo.undef))
+                                    {
+                                        i++;
+                                        if ((Program.lexema)Enum.Parse(typeof(Program.lexema), getLexemaName(i)) == Program.lexema.chaveDir)
+                                        {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    return false;
             }
             return false;
         }
