@@ -1,79 +1,148 @@
-#Variáveis
-S GERAL MAIN BLOCO DECLARACAO COMANDO IF ATRIBUICAO WHILE FOR DELCARACAO TIPO IDENTIFICADOR EXP_COND ELSE EXP_AR MUL MENOSP NUM
-EXP_BOOL OP_LOGICO EXP_NEGACAO EXP_RELACIONAL OP_RELACIONAL
-# Terminais
-int float double string char boolean while for if else == =! > < >= <= numero literal = { } [ ] ( ) + - * / ^ v ! true false
-#Regras
+//Essa gramática é mais fácil para nós compreendermos:
 
-S -> GERAL
 
-GERAL  -> MAIN
+BLOCO -> DECL | ATR | IF | WHILE | BLOCO’ 
 
-MAIN -> { BLOCO } | { }
+BLOCO’ -> BLOCO | ɛ 
 
-BLOCO -> DECLARACAO BLOCO
-BLOCO -> BLOCO
-BLOCO -> DECLARACAO
-BLOCO -> BLOCO COMANDO
-BLOCO -> COMANDO
+DECL -> TIPO ATR | TIPO id ; 
 
-COMANDO -> IF
-COMANDO -> ATRIBUICAO
-COMANDO -> WHILE
-COMANDO -> FOR
+TIPO -> int | float | string | bool 
 
-DECLARACAO -> TIPO IDENTIFICADOR ;
-TIPO -> int | float | double | string | char | bool
-IDENTIFICADOR -> id | id = EXP_AR
+ATR -> id = valor ; | id = id ; | id = EXP ; 
 
-IF -> if ( EXP_COND ) { BLOCO } ELSE
-IF -> if ( EXP_COND ) { BLOCO }
-IF -> if ( EXP_COND ) {  } ELSE
-IF -> if ( EXP_COND ) {  }
+EXP -> VALOR OPERACAO | VALOR 
 
-ELSE -> else { BLOCO }
-ELSE -> else { }
+VALOR -> null | bool | string | valor | id | ( EXP )
 
-EXP_AR -> EXP_AR + MUL
-EXP_AR -> EXP_AR - MUL
-EXP_AR -> MUL
+OPERACAO -> opAlgebrico EXP | opRel EXP | opLog EXP 
 
-MUL -> MUL * MENOSP
-MUL -> MUL / MENOSP
-MUL -> MENOSP
+opAlgebrico -> + | - | * | /
 
-MENOSP -> ( EXP_AR )
-MENOSP -> - ( EXP_AR )
-MENOSP -> - NUM
-MENOSP -> NUM
+opRel -> == |>= |<= |=! | < | >
 
-NUM -> id | numero
+opLog -> ^ | v
 
-ATRIBUICAO -> id = EXP_AR
-ATRIBUICAO -> id = numero
-ATRIBUICAO -> id = literal
-ATRIBUICAO -> id = true
-ATRIBUICAO -> id = false
+IF -> if ( EXP ) { BLOCO } ELSE 
 
-EXP_COND -> EXP_BOOL OP_LOGICO EXP_BOOL
-EXP_COND -> EXP_BOOL OP_LOGICO EXP_RELACIONAL
-EXP_COND -> EXP_RELACIONAL OP_LOGICO EXP_BOOL
-EXP_COND -> EXP_RELACIONAL OP_RELACIONAL EXP_BOOL
-EXP_COND -> EXP_BOOL
-EXP_COND -> EXP_RELACIONAL
+ELSE -> else { BLOCO } | ɛ 
 
-EXP_BOOL -> EXP_BOOL OP_LOGICO EXP_BOOL
-EXP_BOOL -> EXP_BOOL
-EXP_BOOL -> id | true | false | EXP_NEGACAO
+WHILE -> while ( EXP ) { BLOCO }
 
-OP_LOGICO -> ^ | v
-EXP_NEGACAO -> !EXP_BOOL | !id
 
-EXP_RELACIONAL -> EXP_AR OP_RELACIONAL EXP_AR
+------------------------------------------------------
+//Fatorada à esquerda:
 
-OP_RELACIONAL -> == | =! | < | > | <= | >=
 
-WHILE -> ( EXP_COND ) { BLOCO }
+BLOCO -> DECL | ATR | IF | WHILE | BLOCO'
 
-FOR -> ( ATRIBUICAO ; EXP_COND ; ATRIBUICAO ) { BLOCO }
+BLOCO' -> BLOCO | ɛ
 
+DECL -> T ATR | T I ;
+
+T -> TIPO
+
+TIPO -> int | float | string | bool
+
+I-> id
+
+ATR -> A num ; | A I ; | A X ;
+
+A -> I = 
+
+EXP -> V OPERACAO | V 
+
+V -> VALOR
+
+VALOR -> null | bool | string | num | I | ( X )
+
+OPERACAO -> opAlgebrico X | opRel X | opLog X
+
+X -> EXP  
+
+opAlgebrico -> + | - | * | /
+
+opRel -> == | >= | <= | =! | < | >
+
+opLog -> ^ | v
+
+IF -> if ( X ) { BLOCO } ELSE 
+
+ELSE -> else { BLOCO } | ɛ
+
+WHILE -> while ( X ) { BLOCO }
+
+
+------------------------------------------------------------------------------------------------------------
+//Esta será a gramática utilizada pelo código com os terminais nomeados de acordo com os lexemas corretamente:
+
+
+BLOCO -> DECL | ATR | IF | WHILE | BLOCO’ 
+
+BLOCO’ -> BLOCO | ɛ 
+
+DECL -> TIPO ATR | TIPO id pontoVirgula 
+
+TIPO -> mInt | mFloat | mString | bool 
+
+ATR -> id atribuicao valor pontoVirgula | id atribuicao id pontoVirgula | id atribuicao EXP pontoVirgula 
+
+EXP -> VALOR OPERACAO | VALOR 
+
+VALOR -> null | bool | mString | valor | id | parenEsq EXP parenDir 
+
+OPERACAO -> opAlgebrico EXP | opRel EXP | opLog EXP
+
+opAlgebrico -> + | - | * | /
+
+opRel -> == |>= |<= |=! | < | >
+
+opLog -> ^ | v
+
+IF -> mIf parenEsq EXP parenDir chaveEsq BLOCO chaveDir ELSE 
+
+ELSE -> mElse chaveEsq BLOCO chaveDir | ɛ 
+
+WHILE -> mWhile parenEsq EXP parenDir chaveEsq BLOCO chaveDir 
+
+------------------------------------------------------
+Fatorada à esquerda:
+
+
+BLOCO -> DECL | ATR | IF | WHILE | BLOCO'
+
+BLOCO' -> BLOCO | ɛ
+
+DECL -> T ATR | T I pontoVirgula
+
+T -> TIPO
+
+I-> id
+
+TIPO -> mInt | mFloat | mString | bool 
+
+ATR -> A num pontoVirgula | A id pontoVirgula | A X pontoVirgula
+
+A -> I atribuicao
+
+EXP -> V OPERACAO | V 
+
+V -> VALOR
+
+VALOR -> null | bool | mString | valor | I | parenEsq X parenDir
+
+OPERACAO -> opAlgebrico X | opRel X | opLog X
+
+X -> EXP  
+
+opAlgebrico -> + | - | * | /
+
+opRel -> == | >= | <= | =! | < | >
+
+opLog -> ^ | v
+
+IF -> mIf parenEsq X parenDir chaveEsq BLOCO chaveDir ELSE 
+
+ELSE -> mElse chaveEsq BLOCO chaveDir | ɛ 
+
+WHILE -> while parenEsq X parenDir chaveEsq BLOCO chaveDir

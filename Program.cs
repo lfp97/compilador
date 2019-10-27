@@ -76,6 +76,7 @@ namespace Scanner
                 }
                 //Console.WriteLine("caminho do arq: " + outputPath);
                 if (AnalisadorSintatico.AnalyzeOutput(outputPath))
+                {}
                     Console.WriteLine("Analise Sintatica finalizada com sucesso, nao foram encontrados erros.");
             }
         }
