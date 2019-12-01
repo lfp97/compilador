@@ -64,15 +64,24 @@ namespace Scanner
                                     {
                                         lexemaLido = pilhaLexemas.Last();
                                         pilhaLexemas.RemoveAt(pilhaLexemas.Count-1);
+                                        Console.WriteLine("novo lexemaLido = " + lexemaLido);
                                     }
+                                    Console.WriteLine("// variavelLida = " + variavelLida + " // lexemaLido = " + lexemaLido);
+                                    Console.WriteLine("if (variavelLida == lexemaLido)   -> " + (variavelLida == lexemaLido));
                                     if (variavelLida == lexemaLido) //famoso match da analise top down
                                     {
+                                        Console.WriteLine("MATCH!");
                                         lexemaLido = null;
+                                        //ja que deu match:
+                                        //nao precisa chamar a parser table (entao nao executa o else abaixo), e volta ao flux de:
+                                        //pegar o prox elemento da gramatica e o novo lexema para testar tudo novamente
                                     }
                                     else //caso nao dê match, é preciso analisar a parserTable novamente, enviando também o lexema lido para ela decidir a producao a ser retornada
                                     {
-                                        Console.WriteLine("// variavelLida = " + variavelLida + " // lexemaLido = " + lexemaLido);
+                                        //Console.WriteLine("// variavelLida = " + variavelLida + " // lexemaLido = " + lexemaLido);
+                                        Console.WriteLine("chamando 'parserTable.cs' com variavelLida = " + variavelLida + " // lexemaLido = " + lexemaLido);
                                         result = ParserTable.buscar(variavelLida, lexemaLido);
+
                                         pilhaResultado.Add(variavelLida + " -> ");
                                         fw.WriteLine($"{variavelLida} -> ");
                                         foreach (String item in result)
@@ -96,11 +105,31 @@ namespace Scanner
                                             result.Reverse(); //preparar para empilhar os resultados da parserTable
                                             foreach (String item in result)
                                             {
+                                                Console.WriteLine("pilhaGramatica.Add(" + item + ");");
                                                 pilhaGramatica.Add(item);
                                             }
                                         }
                                     }
                                 }
+                                Console.WriteLine("-------------------------------");
+                                Console.WriteLine("pilhaGramatica vazia! \n Resultados:");
+                                foreach (String item in pilhaLexemas)
+                                {
+                                    Console.WriteLine("pilhaLexemas: " + item);
+                                }
+                                //Console.WriteLine("pilhaLexemas[1] == " + pilhaLexemas[1]);
+                                //Console.WriteLine(pilhaLexemas.Count());
+                                if (pilhaLexemas.Count() == 1)
+                                {
+                                    Console.WriteLine("Análise Sintática: OK");
+                                    return true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Análise Sintática: ERRO");
+                                    return false;
+                                }
+
                             }
                         }
                     }
