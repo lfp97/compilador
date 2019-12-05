@@ -24,11 +24,14 @@ namespace Scanner
             mElse = 11, // else     Expressão Regular em C#: @"\b(else)\b"
             mFloat = 12, // float   Expressão Regular em C#: @"\b(float)\b"
             negacao = 13, // !      Expressão Regular em C#: @"\b(while)\b"
+            mBool = 14, // bool
             mFor = 16, // for       Expressão Regular em C#: @"\b(for)\b"
             valor = 17, // numericos    Expressão Regular em C#: @"\b(0-9)\b"
             atribuicao = 18, // =       Expressão Regular em C#: @"\b(=)\b"
             opAlgebrico = 19, // + - * /    Expressão Regular em C#: @"\b(+|-|*|\/)\b"
             mString = 20, // "((a-z)*(0-9)*)*"
+            mTrue = 21, //true
+            mFalse = 22 //false
         }
 
         static void Main(string[] args)
@@ -77,13 +80,14 @@ namespace Scanner
                 //Console.WriteLine("caminho do arq: " + outputPath);
                 if (AnalisadorSintatico.AnalyzeOutput(outputPath))
                 {
-                    Console.WriteLine("Analise Sintática finalizada com sucesso, não foram encontrados erros.");
+                    Console.WriteLine("Análise Sintática finalizada com sucesso, não foram encontrados erros.");
+                    Console.WriteLine("Iniciando Análise Semântica...");
+                    AnalisadorSemantico.analisador_semantico(outputPath);
                 }
                 else
                 {
                     Console.WriteLine("Analise Sintática com erro!");
                 }
-                AnalisadorSemantico.analisador_semantico(outputPath);
             }
         }
 
@@ -219,6 +223,12 @@ namespace Scanner
                     return lexema.mIf;
                 case "int":
                     return lexema.mInt;
+                case "bool":
+                    return lexema.mBool;
+                case "true":
+                    return lexema.mTrue;
+                case "false":
+                    return lexema.mFalse;
                 case "float":
                     return lexema.mFloat;
                 case "else":

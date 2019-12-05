@@ -1,3 +1,6 @@
-int a= 3;
+bool a = true;
 float b=11;
-b=a;
+int c= 3;
+a=false;
+if (a v true)
+{}
